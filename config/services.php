@@ -37,6 +37,29 @@ return [
 
     'news' => [
         'rss_url' => env('NEWS_RSS_URL', 'https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms'),
+        'max_posts' => env('NEWS_MAX_POSTS', 100),
+        'feeds' => [
+            [
+                'name' => 'Malaysia',
+                'url' => env('NEWS_RSS_URL', 'https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms'),
+            ],
+            [
+                'name' => 'Bernama',
+                'url' => 'https://news.google.com/rss/search?q=site%3Abernama.com%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+            ],
+            [
+                'name' => 'Astro Awani',
+                'url' => 'https://news.google.com/rss/search?q=site%3Aastroawani.com%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+            ],
+            [
+                'name' => 'Sinar Harian',
+                'url' => 'https://news.google.com/rss/search?q=site%3Asinarharian.com.my%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+            ],
+            [
+                'name' => 'Teknologi Malaysia',
+                'url' => 'https://news.google.com/rss/search?q=teknologi%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+            ],
+        ],
     ],
 
 ];

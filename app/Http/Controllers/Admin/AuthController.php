@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -20,10 +21,11 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (! hash_equals((string) config('app.admin_password'), $validated['password'])) {
+        if (! $this->validPassword($validated['password'])) {
             return back()->withErrors(['password' => 'Password admin tidak betul.']);
         }
 
+        $request->session()->regenerate();
         $request->session()->put('admin_authenticated', true);
 
         return redirect()->route('admin.posts.index');
@@ -32,7 +34,20 @@ class AuthController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $request->session()->forget('admin_authenticated');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+
+    private function validPassword(string $password): bool
+    {
+        $hash = config('app.admin_password_hash');
+
+        if ($hash) {
+            return Hash::check($password, $hash);
+        }
+
+        return hash_equals((string) config('app.admin_password'), $password);
     }
 }

@@ -142,6 +142,15 @@
             color: var(--ink);
         }
 
+        .source-link {
+            display: inline-block;
+            margin-top: 14px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
         .hero {
             display: grid;
             grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
@@ -158,9 +167,10 @@
 
         .image-placeholder {
             align-items: center;
-            background: #e5e7eb;
+            background: linear-gradient(135deg, #f4eee5, #e5e7eb);
             color: var(--muted);
             display: grid;
+            font-family: Georgia, 'Times New Roman', serif;
             font-weight: 800;
             height: 100%;
             justify-items: center;
@@ -486,6 +496,9 @@
                     <h1>{{ $featuredPost->title }}</h1>
                     <p class="lead-copy">{{ $featuredPost->excerpt }}</p>
                     <div class="meta">Oleh {{ $featuredPost->author }} - {{ $featuredPost->published_at->diffForHumans() }}</div>
+                    @if ($featuredPost->source_url)
+                        <a class="source-link" href="{{ $featuredPost->source_url }}" target="_blank" rel="noopener noreferrer">Baca sumber asal</a>
+                    @endif
                 </article>
 
                 <aside class="side-panel">
@@ -553,6 +566,9 @@
                         <h2>{{ $post->title }}</h2>
                         <p>{{ $post->excerpt }}</p>
                         <div class="meta">Oleh {{ $post->author }} - {{ $post->published_at->format('d M Y') }}</div>
+                        @if ($post->source_url)
+                            <a class="source-link" href="{{ $post->source_url }}" target="_blank" rel="noopener noreferrer">Baca sumber</a>
+                        @endif
                     </article>
                 @empty
                     <p>Tiada artikel dijumpai.</p>

@@ -17,6 +17,8 @@ return [
 
     'admin_password' => env('ADMIN_PASSWORD', 'admin123'),
 
+    'admin_password_hash' => env('ADMIN_PASSWORD_HASH'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

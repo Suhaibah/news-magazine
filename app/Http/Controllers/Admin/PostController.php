@@ -77,6 +77,7 @@ class PostController extends Controller
             'body' => ['required', 'string'],
             'author' => ['required', 'string', 'max:255'],
             'image_url' => ['nullable', 'url', 'max:2048'],
+            'source_url' => ['nullable', 'url', 'max:2048'],
             'image' => ['nullable', 'image', 'max:2048'],
             'published_at' => ['nullable', 'date'],
             'views_count' => ['required', 'integer', 'min:0'],
@@ -85,6 +86,7 @@ class PostController extends Controller
 
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['image_url'] = $validated['image_url'] ?? '';
+        $validated['source_url'] = $validated['source_url'] ?? null;
         $validated['slug'] = Str::slug($validated['title']);
         unset($validated['image']);
 

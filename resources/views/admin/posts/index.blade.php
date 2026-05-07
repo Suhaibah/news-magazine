@@ -25,6 +25,9 @@
                         <td>{{ optional($post->published_at)->format('d M Y') }}</td>
                         <td>
                             <div class="actions">
+                                @if ($post->source_url)
+                                    <a class="button secondary" href="{{ $post->source_url }}" target="_blank" rel="noopener noreferrer">Sumber</a>
+                                @endif
                                 <a class="button secondary" href="{{ route('admin.posts.edit', $post) }}">Edit</a>
                                 <form action="{{ route('admin.posts.destroy', $post) }}" method="post" onsubmit="return confirm('Padam artikel ini?')">
                                     @csrf

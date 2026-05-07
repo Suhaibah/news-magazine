@@ -40,6 +40,10 @@
                 <input name="image_url" value="{{ old('image_url', $post->image_url) }}" placeholder="https://...">
             </label>
 
+            <label>Source URL
+                <input name="source_url" value="{{ old('source_url', $post->source_url) }}" placeholder="https://...">
+            </label>
+
             <label>Upload Gambar
                 <input type="file" name="image" accept="image/*">
             </label>

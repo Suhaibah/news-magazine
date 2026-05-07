@@ -16,19 +16,46 @@ class ImportNewsRss extends Command
     protected $signature = 'news:import-rss
         {url? : RSS feed URL}
         {--category=Malaysia : Category name for imported news}
-        {--limit=15 : Maximum items to import}';
+        {--limit=15 : Maximum items to import per feed}
+        {--all : Import every configured feed}';
 
     protected $description = 'Import Malaysia news from RSS and save available images locally.';
 
     public function handle(): int
     {
-        $url = $this->argument('url') ?: config('services.news.rss_url');
-        $limit = max(1, (int) $this->option('limit'));
+        if ($this->option('all') || ! $this->argument('url')) {
+            return $this->importConfiguredFeeds();
+        }
 
+        return $this->importFeed(
+            (string) $this->argument('url'),
+            (string) $this->option('category'),
+            max(1, (int) $this->option('limit'))
+        );
+    }
+
+    private function importConfiguredFeeds(): int
+    {
+        $feeds = config('services.news.feeds', []);
+        $status = self::SUCCESS;
+
+        foreach ($feeds as $feed) {
+            $result = $this->importFeed($feed['url'], $feed['name'], max(1, (int) $this->option('limit')));
+
+            if ($result !== self::SUCCESS) {
+                $status = self::FAILURE;
+            }
+        }
+
+        return $status;
+    }
+
+    private function importFeed(string $url, string $categoryName, int $limit): int
+    {
         $category = Category::query()->firstOrCreate(
-            ['slug' => Str::slug((string) $this->option('category'))],
+            ['slug' => Str::slug($categoryName)],
             [
-                'name' => (string) $this->option('category'),
+                'name' => $categoryName,
                 'description' => 'Berita semasa diimport melalui RSS.',
                 'color' => '#c0262d',
             ]
@@ -95,7 +122,7 @@ class ImportNewsRss extends Command
             $imported++;
         }
 
-        $this->info("Import selesai: {$imported} artikel.");
+        $this->info("Import {$categoryName} selesai: {$imported} artikel.");
 
         return self::SUCCESS;
     }

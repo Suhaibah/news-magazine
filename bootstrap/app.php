@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withCommands([
         \App\Console\Commands\ImportNewsRss::class,
+        \App\Console\Commands\CleanupOldNews::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
