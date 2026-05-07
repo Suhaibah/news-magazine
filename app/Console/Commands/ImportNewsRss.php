@@ -100,6 +100,7 @@ class ImportNewsRss extends Command
             $description = trim((string) $item->description);
             $excerpt = $this->cleanText($description) ?: $title;
             $imageUrl = $this->imageUrlFromItem($item, $description) ?: $this->imageUrlFromPage($sourceUrl);
+            $imageUrl = $this->usableImageUrl($imageUrl);
             $imagePath = $imageUrl ? $this->saveImage($imageUrl) : null;
 
             Post::query()->updateOrCreate(
@@ -148,6 +149,28 @@ class ImportNewsRss extends Command
         }
 
         return null;
+    }
+
+    private function usableImageUrl(?string $url): ?string
+    {
+        if (! $url) {
+            return null;
+        }
+
+        $blockedPatterns = [
+            'news.google.com',
+            'lh3.googleusercontent.com',
+            'gstatic.com',
+            'google.com',
+        ];
+
+        foreach ($blockedPatterns as $pattern) {
+            if (str_contains($url, $pattern)) {
+                return null;
+            }
+        }
+
+        return $url;
     }
 
     private function imageUrlFromPage(string $url): ?string
