@@ -167,17 +167,50 @@
 
         .image-placeholder {
             align-items: center;
-            background: linear-gradient(135deg, #f4eee5, #e5e7eb);
-            color: var(--muted);
-            display: grid;
+            background:
+                linear-gradient(135deg, rgba(255, 253, 248, .88), rgba(246, 244, 239, .62)),
+                repeating-linear-gradient(135deg, rgba(21, 23, 26, .08) 0 1px, transparent 1px 12px);
+            color: var(--ink);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             font-family: Georgia, 'Times New Roman', serif;
             font-weight: 800;
             height: 100%;
-            justify-items: center;
+            justify-content: center;
             padding: 20px;
             text-align: center;
-            text-transform: uppercase;
             width: 100%;
+        }
+
+        .placeholder-mark {
+            align-items: center;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            display: inline-flex;
+            font: 900 28px Arial, Helvetica, sans-serif;
+            height: 56px;
+            justify-content: center;
+            margin: 0 auto;
+            width: 56px;
+        }
+
+        .placeholder-title {
+            font-size: clamp(18px, 3vw, 34px);
+            line-height: 1;
+            max-width: 14ch;
+        }
+
+        .thumb .placeholder-mark {
+            font-size: 18px;
+            height: 38px;
+            width: 38px;
+        }
+
+        .thumb .placeholder-title {
+            font-size: 16px;
+            line-height: 1.05;
+            max-width: 16ch;
         }
 
         .kicker {
@@ -530,7 +563,10 @@
                         @if ($featuredPost->image_source)
                             <img src="{{ $featuredPost->image_source }}" alt="{{ $featuredPost->title }}">
                         @else
-                            <div class="image-placeholder">RSS image belum tersedia</div>
+                            <div class="image-placeholder" style="color: {{ $featuredPost->category->color }}">
+                                <span class="placeholder-mark">{{ mb_substr($featuredPost->category->name, 0, 1) }}</span>
+                                <span class="placeholder-title">{{ $featuredPost->title }}</span>
+                            </div>
                         @endif
                     </div>
                     <div class="kicker" style="margin-top: 18px;">{{ $featuredPost->category->name }}</div>
@@ -600,7 +636,10 @@
                             @if ($post->image_source)
                                 <img src="{{ $post->image_source }}" alt="{{ $post->title }}">
                             @else
-                                <div class="image-placeholder">No image</div>
+                                <div class="image-placeholder" style="color: {{ $post->category->color }}">
+                                    <span class="placeholder-mark">{{ mb_substr($post->category->name, 0, 1) }}</span>
+                                    <span class="placeholder-title">{{ $post->title }}</span>
+                                </div>
                             @endif
                         </div>
                         <div class="kicker">{{ $post->category->name }}</div>
