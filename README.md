@@ -9,7 +9,10 @@ Laravel news magazine website menggunakan MySQL XAMPP/Herd, admin panel, search,
 - Search artikel berdasarkan tajuk, ringkasan, isi, dan author.
 - Filter kategori.
 - Trending/Popular berdasarkan `views_count`.
+- Page detail artikel dengan related posts dan counter views.
 - Admin panel untuk tambah, edit, dan padam artikel/kategori.
+- Admin dashboard untuk lihat statistik artikel, kategori, RSS, artikel tanpa gambar, dan artikel popular.
+- Butang admin untuk import RSS dan cleanup tanpa perlu buka terminal.
 - Upload gambar artikel ke local storage.
 - RSS import dari Google News Malaysia.
 - Multi-feed RSS untuk Malaysia, Bernama, Astro Awani, Sinar Harian, dan Teknologi Malaysia.
@@ -126,6 +129,13 @@ ADMIN_PASSWORD_HASH=$2y$...
 ```
 
 Jika `ADMIN_PASSWORD_HASH` ada nilai, sistem akan guna hash itu dan abaikan password plain.
+
+Selepas login, dashboard admin menyediakan:
+
+- Ringkasan jumlah artikel, kategori, artikel RSS, dan artikel tanpa gambar.
+- Butang `Import RSS` untuk tarik semua feed yang dikonfigurasi.
+- Butang `Cleanup` untuk buang artikel RSS lama.
+- Senarai artikel popular berdasarkan views.
 
 ## Deploy Checklist
 

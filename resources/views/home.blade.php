@@ -132,8 +132,12 @@
             border: 1px solid var(--ink);
             color: white;
             cursor: pointer;
-            font: 800 13px Arial, Helvetica, sans-serif;
-            padding: 10px 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font: 800 12px Arial, Helvetica, sans-serif;
+            min-height: 34px;
+            padding: 8px 11px;
             text-transform: uppercase;
         }
 
@@ -146,7 +150,7 @@
             display: inline-block;
             margin-top: 14px;
             color: var(--accent);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -441,9 +445,9 @@
             font-weight: 800;
             justify-content: center;
             line-height: 1;
-            min-height: 34px;
-            min-width: 34px;
-            padding: 8px 10px;
+            min-height: 32px;
+            min-width: 32px;
+            padding: 7px 9px;
             text-transform: uppercase;
         }
 
@@ -559,7 +563,7 @@
         @if ($featuredPost)
             <section class="hero">
                 <article>
-                    <div class="lead-image">
+                    <a class="lead-image" href="{{ route('posts.show', $featuredPost) }}">
                         @if ($featuredPost->image_source)
                             <img src="{{ $featuredPost->image_source }}" alt="{{ $featuredPost->title }}">
                         @else
@@ -568,9 +572,9 @@
                                 <span class="placeholder-title">{{ $featuredPost->title }}</span>
                             </div>
                         @endif
-                    </div>
+                    </a>
                     <div class="kicker" style="margin-top: 18px;">{{ $featuredPost->category->name }}</div>
-                    <h1>{{ $featuredPost->title }}</h1>
+                    <h1><a href="{{ route('posts.show', $featuredPost) }}">{{ $featuredPost->title }}</a></h1>
                     <p class="lead-copy">{{ $featuredPost->excerpt }}</p>
                     <div class="meta">Oleh {{ $featuredPost->author }} - {{ $featuredPost->published_at->diffForHumans() }}</div>
                     @if ($featuredPost->source_url)
@@ -616,7 +620,7 @@
                         <div class="rank">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
                         <div>
                             <div class="kicker">{{ $post->category->name }}</div>
-                            <h3>{{ $post->title }}</h3>
+                            <h3><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
                             <div class="meta">{{ number_format($post->views_count) }} views - {{ $post->published_at->diffForHumans() }}</div>
                         </div>
                     </article>
@@ -632,7 +636,7 @@
             <div class="post-grid">
                 @forelse ($latestPosts as $post)
                     <article class="post-card">
-                        <div class="thumb">
+                        <a class="thumb" href="{{ route('posts.show', $post) }}">
                             @if ($post->image_source)
                                 <img src="{{ $post->image_source }}" alt="{{ $post->title }}">
                             @else
@@ -641,9 +645,9 @@
                                     <span class="placeholder-title">{{ $post->title }}</span>
                                 </div>
                             @endif
-                        </div>
+                        </a>
                         <div class="kicker">{{ $post->category->name }}</div>
-                        <h2>{{ $post->title }}</h2>
+                        <h2><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h2>
                         <p>{{ $post->excerpt }}</p>
                         <div class="meta">Oleh {{ $post->author }} - {{ $post->published_at->format('d M Y') }}</div>
                         @if ($post->source_url)

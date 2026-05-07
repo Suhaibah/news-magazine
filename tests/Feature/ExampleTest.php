@@ -55,10 +55,34 @@ class ExampleTest extends TestCase
             'password' => 'admin123',
         ]);
 
-        $response->assertRedirect(route('admin.posts.index'));
+        $response->assertRedirect(route('admin.dashboard'));
 
-        $this->get(route('admin.posts.index'))
+        $this->get(route('admin.dashboard'))
             ->assertStatus(200)
-            ->assertSee('Artikel');
+            ->assertSee('Dashboard');
+    }
+
+    public function test_article_detail_page_increments_views(): void
+    {
+        $this->seed();
+        $category = Category::query()->firstOrFail();
+
+        $post = Post::query()->create([
+            'category_id' => $category->id,
+            'title' => 'Artikel Detail MetroPress',
+            'slug' => 'artikel-detail-metropress',
+            'excerpt' => 'Ringkasan artikel detail.',
+            'body' => 'Isi artikel detail.',
+            'author' => 'MetroPress',
+            'image_url' => '',
+            'views_count' => 7,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('posts.show', $post))
+            ->assertStatus(200)
+            ->assertSee('Artikel Detail MetroPress');
+
+        $this->assertSame(8, $post->refresh()->views_count);
     }
 }

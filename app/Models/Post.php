@@ -43,6 +43,11 @@ class Post extends Model
         return $this->image_url;
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
