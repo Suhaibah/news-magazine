@@ -389,6 +389,47 @@
             margin-top: 24px;
         }
 
+        .pagination nav {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .pagination a,
+        .pagination span {
+            align-items: center;
+            background: #fffdf8;
+            border: 1px solid var(--line);
+            color: var(--ink);
+            display: inline-flex;
+            font-size: 13px;
+            font-weight: 800;
+            justify-content: center;
+            line-height: 1;
+            min-height: 34px;
+            min-width: 34px;
+            padding: 8px 10px;
+            text-transform: uppercase;
+        }
+
+        .pagination [aria-current="page"] span,
+        .pagination span[aria-current="page"] {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: white;
+        }
+
+        .pagination svg {
+            height: 16px;
+            width: 16px;
+        }
+
+        .pagination .hidden {
+            display: none;
+        }
+
         .footer {
             border-top: 1px solid var(--line);
             background: #fffdf8;
