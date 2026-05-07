@@ -19,6 +19,7 @@ class Post extends Model
         'author',
         'image_url',
         'image_path',
+        'source_url',
         'is_featured',
         'views_count',
         'published_at',

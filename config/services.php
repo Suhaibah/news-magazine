@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'news' => [
+        'rss_url' => env('NEWS_RSS_URL', 'https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms'),
+    ],
+
 ];

@@ -156,6 +156,20 @@
             background: #ddd;
         }
 
+        .image-placeholder {
+            align-items: center;
+            background: #e5e7eb;
+            color: var(--muted);
+            display: grid;
+            font-weight: 800;
+            height: 100%;
+            justify-items: center;
+            padding: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
         .kicker {
             color: var(--accent);
             font-size: 13px;
@@ -355,6 +369,12 @@
             font-size: 15px;
         }
 
+        .empty-state {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: 20px;
+        }
+
         .pagination {
             margin-top: 24px;
         }
@@ -456,7 +476,11 @@
             <section class="hero">
                 <article>
                     <div class="lead-image">
-                        <img src="{{ $featuredPost->image_source }}" alt="{{ $featuredPost->title }}">
+                        @if ($featuredPost->image_source)
+                            <img src="{{ $featuredPost->image_source }}" alt="{{ $featuredPost->title }}">
+                        @else
+                            <div class="image-placeholder">RSS image belum tersedia</div>
+                        @endif
                     </div>
                     <div class="kicker" style="margin-top: 18px;">{{ $featuredPost->category->name }}</div>
                     <h1>{{ $featuredPost->title }}</h1>
@@ -478,6 +502,14 @@
                         @endforeach
                     </div>
                 </aside>
+            </section>
+        @else
+            <section class="hero">
+                <div class="empty-state">
+                    <div class="kicker">RSS belum diimport</div>
+                    <h1>Import berita sebenar dari Google News Malaysia</h1>
+                    <p class="lead-copy">Jalankan command <strong>php artisan news:import-rss</strong> untuk memuatkan berita semasa dan menyimpan gambar yang tersedia secara local.</p>
+                </div>
             </section>
         @endif
 
@@ -511,7 +543,11 @@
                 @forelse ($latestPosts as $post)
                     <article class="post-card">
                         <div class="thumb">
-                            <img src="{{ $post->image_source }}" alt="{{ $post->title }}">
+                            @if ($post->image_source)
+                                <img src="{{ $post->image_source }}" alt="{{ $post->title }}">
+                            @else
+                                <div class="image-placeholder">No image</div>
+                            @endif
                         </div>
                         <div class="kicker">{{ $post->category->name }}</div>
                         <h2>{{ $post->title }}</h2>
