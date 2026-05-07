@@ -36,28 +36,28 @@ return [
     ],
 
     'news' => [
-        'rss_url' => env('NEWS_RSS_URL', 'https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms'),
+        'rss_url' => env('NEWS_RSS_URL', 'https://www.astroawani.com/rss/latest/public'),
         'max_posts' => env('NEWS_MAX_POSTS', 100),
         'feeds' => [
             [
+                'name' => 'Terkini',
+                'url' => env('NEWS_RSS_URL', 'https://www.astroawani.com/rss/latest/public'),
+            ],
+            [
                 'name' => 'Malaysia',
-                'url' => env('NEWS_RSS_URL', 'https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms'),
+                'url' => 'https://www.astroawani.com/rss/national/public',
             ],
             [
-                'name' => 'Bernama',
-                'url' => 'https://news.google.com/rss/search?q=site%3Abernama.com%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+                'name' => 'Politik',
+                'url' => 'https://www.astroawani.com/rss/politics/public',
             ],
             [
-                'name' => 'Astro Awani',
-                'url' => 'https://news.google.com/rss/search?q=site%3Aastroawani.com%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+                'name' => 'Bisnes',
+                'url' => 'https://www.astroawani.com/rss/business/public',
             ],
             [
-                'name' => 'Sinar Harian',
-                'url' => 'https://news.google.com/rss/search?q=site%3Asinarharian.com.my%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
-            ],
-            [
-                'name' => 'Teknologi Malaysia',
-                'url' => 'https://news.google.com/rss/search?q=teknologi%20Malaysia&hl=ms-MY&gl=MY&ceid=MY:ms',
+                'name' => 'Teknologi',
+                'url' => 'https://www.astroawani.com/rss/gadgets/public',
             ],
         ],
     ],

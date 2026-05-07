@@ -1,6 +1,6 @@
 # MetroPress News Magazine
 
-Laravel news magazine website menggunakan MySQL XAMPP/Herd, admin panel, search, kategori, pagination, trending/popular, dan importer RSS Google News Malaysia.
+Laravel news magazine website menggunakan MySQL XAMPP/Herd, admin panel, search, kategori, pagination, trending/popular, dan importer RSS Malaysia.
 
 ## Features
 
@@ -14,8 +14,8 @@ Laravel news magazine website menggunakan MySQL XAMPP/Herd, admin panel, search,
 - Admin dashboard untuk lihat statistik artikel, kategori, RSS, artikel tanpa gambar, dan artikel popular.
 - Butang admin untuk import RSS dan cleanup tanpa perlu buka terminal.
 - Upload gambar artikel ke local storage.
-- RSS import dari Google News Malaysia.
-- Multi-feed RSS untuk Malaysia, Bernama, Astro Awani, Sinar Harian, dan Teknologi Malaysia.
+- RSS import dari feed berita Malaysia yang menyediakan gambar artikel.
+- Multi-feed RSS untuk Terkini, Malaysia, Politik, Bisnes, dan Teknologi.
 - Auto refresh RSS melalui Laravel Scheduler.
 - Cleanup artikel lama supaya database tidak membesar tanpa had.
 - Gambar RSS disimpan local jika feed atau halaman sumber menyediakan image.
@@ -47,7 +47,7 @@ DB_PASSWORD=
 Default RSS:
 
 ```env
-NEWS_RSS_URL=https://news.google.com/rss?hl=ms-MY&gl=MY&ceid=MY:ms
+NEWS_RSS_URL=https://www.astroawani.com/rss/latest/public
 NEWS_MAX_POSTS=100
 ```
 
@@ -62,10 +62,10 @@ php artisan news:import-rss
 Import satu custom RSS:
 
 ```bash
-php artisan news:import-rss "https://news.google.com/rss/search?q=site:bernama.com&hl=ms-MY&gl=MY&ceid=MY:ms" --category=Bernama --limit=20
+php artisan news:import-rss "https://www.astroawani.com/rss/national/public" --category=Malaysia --limit=20
 ```
 
-Nota: Google News RSS kadang-kadang tidak membekalkan gambar. Command akan cuba cari image daripada RSS dahulu, kemudian cuba `og:image` daripada halaman sumber. Jika jumpa, gambar disimpan ke `storage/app/public/rss`.
+Nota: command akan cari image daripada `enclosure`, `media:thumbnail`, `media:content`, kemudian cuba `og:image` atau `twitter:image` daripada halaman sumber. Jika jumpa, gambar disimpan ke `storage/app/public/rss`.
 
 ## Auto Refresh RSS
 

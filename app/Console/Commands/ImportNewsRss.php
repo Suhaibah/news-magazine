@@ -75,7 +75,7 @@ class ImportNewsRss extends Command
             return self::FAILURE;
         }
 
-        $xml = simplexml_load_string($response->body(), SimpleXMLElement::class, LIBXML_NOCDATA);
+        $xml = simplexml_load_string(trim($response->body()), SimpleXMLElement::class, LIBXML_NOCDATA);
 
         if (! $xml || ! isset($xml->channel->item)) {
             $this->error('RSS tidak sah atau tiada item berita.');
@@ -135,7 +135,20 @@ class ImportNewsRss extends Command
 
     private function imageUrlFromItem(SimpleXMLElement $item, string $description): ?string
     {
+        $enclosure = $item->enclosure?->attributes();
+
+        if (isset($enclosure['url']) && str_starts_with((string) ($enclosure['type'] ?? ''), 'image/')) {
+            return (string) $enclosure['url'];
+        }
+
         $media = $item->children('media', true);
+
+        if (isset($media->thumbnail)) {
+            $attributes = $media->thumbnail->attributes();
+            if (isset($attributes['url'])) {
+                return (string) $attributes['url'];
+            }
+        }
 
         if (isset($media->content)) {
             $attributes = $media->content->attributes();
@@ -182,7 +195,11 @@ class ImportNewsRss extends Command
                 return null;
             }
 
-            if (preg_match('/<meta\s+property=["\']og:image["\']\s+content=["\']([^"\']+)["\']/i', $response->body(), $matches)) {
+            if (preg_match('/<meta\s+(?:property|name)=["\'](?:og:image|twitter:image)["\']\s+content=["\']([^"\']+)["\']/i', $response->body(), $matches)) {
+                return html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            }
+
+            if (preg_match('/<meta\s+content=["\']([^"\']+)["\']\s+(?:property|name)=["\'](?:og:image|twitter:image)["\']/i', $response->body(), $matches)) {
                 return html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             }
         } catch (\Throwable) {
